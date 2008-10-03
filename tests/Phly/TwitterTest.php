@@ -37,8 +37,6 @@ class Phly_TwitterTest extends PHPUnit_Framework_TestCase
     const TWITTER_USER = 'zftestuser';
     const TWITTER_PASS = 'zftestuser';
 
-    protected $update_id = null;
-
     /**
      * Runs the test methods of this class.
      *
@@ -416,14 +414,14 @@ class Phly_TwitterTest extends PHPUnit_Framework_TestCase
      */
     public function testShowStatusReturnsResponse()
     {
-    	$response = $this->twitter->status->publicTimeline();
-    	$this->assertTrue($response instanceof Zend_Rest_Client_Result);
+        $response = $this->twitter->status->publicTimeline();
+        $this->assertTrue($response instanceof Zend_Rest_Client_Result);
 
-    	$status_id = $response->toValue($response->status->id);
-    	$this->assertType('numeric', $status_id);
+        $status_id = $response->toValue($response->status->id);
+        $this->assertType('numeric', $status_id);
 
-    	$response2 = $this->twitter->status->show($status_id);
-    	$this->assertTrue($response2 instanceof Zend_Rest_Client_Result);
+        $response2 = $this->twitter->status->show($status_id);
+        $this->assertTrue($response2 instanceof Zend_Rest_Client_Result);
 
         $httpClient    = Phly_Twitter::getHttpClient();
         $httpRequest   = $httpClient->getLastRequest();
