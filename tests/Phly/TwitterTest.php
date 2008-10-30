@@ -1,11 +1,11 @@
 <?php
 // Call Phly_TwitterTest::main() if this source file is executed directly.
-if (!defined("PHPUnit_MAIN_METHOD")) {
+if (!defined('PHPUnit_MAIN_METHOD')) {
     set_include_path(
         dirname(__FILE__) . '/../../library'
         . PATH_SEPARATOR . get_include_path()
     );
-    define("PHPUnit_MAIN_METHOD", "Phly_TwitterTest::main");
+    define('PHPUnit_MAIN_METHOD', 'Phly_TwitterTest::main');
 }
 
 set_include_path(
@@ -13,9 +13,8 @@ set_include_path(
         . PATH_SEPARATOR . get_include_path()
     );
 
-
-require_once "PHPUnit/Framework/TestCase.php";
-require_once "PHPUnit/Framework/TestSuite.php";
+require_once 'PHPUnit/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/TestSuite.php';
 
 /** Phly_Twitter */
 require_once 'Phly/Twitter.php';
@@ -44,9 +43,9 @@ class Phly_TwitterTest extends PHPUnit_Framework_TestCase
      */
     public static function main()
     {
-        require_once "PHPUnit/TextUI/TestRunner.php";
+        require_once 'PHPUnit/TextUI/TestRunner.php';
 
-        $suite  = new PHPUnit_Framework_TestSuite("Phly_TwitterTest");
+        $suite  = new PHPUnit_Framework_TestSuite('Phly_TwitterTest');
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
 
@@ -60,12 +59,12 @@ class Phly_TwitterTest extends PHPUnit_Framework_TestCase
     {
         $this->twitter = new Phly_Twitter(self::TWITTER_USER, self::TWITTER_PASS);
 
-        // $adapter = new Zend_Http_Client_Adapter_Test();
-        // $client = new Zend_Http_Client(null, array(
-        //     'adapter' => $adapter
-        // ));
-        // $this->adapter = $adapter;
-        // Phly_Twitter::setHttpClient($client);
+        /*$adapter = new Zend_Http_Client_Adapter_Test();
+        $client = new Zend_Http_Client(null, array(
+            'adapter' => $adapter
+        ));
+        $this->adapter = $adapter;
+        Phly_Twitter::setHttpClient($client);*/
     }
 
     /**
@@ -177,10 +176,9 @@ class Phly_TwitterTest extends PHPUnit_Framework_TestCase
         $httpClient    = Phly_Twitter::getHttpClient();
         $httpRequest   = $httpClient->getLastRequest();
         $httpResponse  = $httpClient->getLastResponse();
-        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . "\n" . $httpResponse->getHeadersAsString());
+        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
     }
-
-    /**
+/**
      * @return void
      */
     public function testPublicTimelineStatusReturnsResults()
@@ -190,7 +188,7 @@ class Phly_TwitterTest extends PHPUnit_Framework_TestCase
         $httpClient    = Phly_Twitter::getHttpClient();
         $httpRequest   = $httpClient->getLastRequest();
         $httpResponse  = $httpClient->getLastResponse();
-        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . "\n" . $httpResponse->getHeadersAsString());
+        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
         $this->assertTrue(isset($response->status));
     }
 
@@ -205,7 +203,7 @@ class Phly_TwitterTest extends PHPUnit_Framework_TestCase
         $httpClient    = Phly_Twitter::getHttpClient();
         $httpRequest   = $httpClient->getLastRequest();
         $httpResponse  = $httpClient->getLastResponse();
-        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . "\n" . $httpResponse->getHeadersAsString());
+        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
         $this->assertTrue(isset($response->status));
     }
 
@@ -218,7 +216,7 @@ class Phly_TwitterTest extends PHPUnit_Framework_TestCase
         $httpClient    = Phly_Twitter::getHttpClient();
         $httpRequest   = $httpClient->getLastRequest();
         $httpResponse  = $httpClient->getLastResponse();
-        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . "\n" . $httpResponse->getHeadersAsString());
+        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
     }
 
     public function testRateLimitStatusHasHitsLeft()
@@ -247,7 +245,9 @@ class Phly_TwitterTest extends PHPUnit_Framework_TestCase
      */
     public function testFriendshipCreate()
     {
-        $response = $this->twitter->friendship->create("sidhighwind");
+        $response = $this->twitter->friendship->create('zftestuser1');
+        $httpClient    = Phly_Twitter::getHttpClient();
+        $httpResponse  = $httpClient->getLastResponse();
         $this->assertTrue($response instanceof Zend_Rest_Client_Result);
     }
 
@@ -257,13 +257,13 @@ class Phly_TwitterTest extends PHPUnit_Framework_TestCase
     public function testFriendshipExists()
     {
         /* @var $response Zend_Rest_Client_Result */
-        $response = $this->twitter->friendship->exists("sidhighwind");
+        $response = $this->twitter->friendship->exists('zftestuser1');
         $this->assertTrue($response instanceof Zend_Rest_Client_Result);
 
         $httpClient     = Phly_Twitter::getHttpClient();
         $httpRequest    = $httpClient->getLastRequest();
         $httpResponse   = $httpClient->getLastResponse();
-        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . "\n" . $httpResponse->getHeadersAsString());
+        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
     }
 
     /**
@@ -277,7 +277,7 @@ class Phly_TwitterTest extends PHPUnit_Framework_TestCase
         $httpClient    = Phly_Twitter::getHttpClient();
         $httpRequest   = $httpClient->getLastRequest();
         $httpResponse  = $httpClient->getLastResponse();
-        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . "\n" . $httpResponse->getHeadersAsString());
+        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
         $this->assertTrue(isset($response->status));
     }
 
@@ -287,12 +287,12 @@ class Phly_TwitterTest extends PHPUnit_Framework_TestCase
     public function testFriendsTimelineStatusWithFriendSpecifiedReturnsResults()
     {
         /* @var $response Zend_Rest_Client_Result */
-        $response = $this->twitter->status->friendsTimeline( array('id' => 'sidhighwind') );
+        $response = $this->twitter->status->friendsTimeline( array('id' => 'zftestuser1') );
         $this->assertTrue($response instanceof Zend_Rest_Client_Result);
         $httpClient    = Phly_Twitter::getHttpClient();
         $httpRequest   = $httpClient->getLastRequest();
         $httpResponse  = $httpClient->getLastResponse();
-        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . "\n" . $httpResponse->getHeadersAsString());
+        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
         $this->assertTrue(isset($response->status));
     }
 
@@ -302,12 +302,12 @@ class Phly_TwitterTest extends PHPUnit_Framework_TestCase
     public function testFriendsTimelineStatusSinceTwoDaysAgoReturnsResults()
     {
         /* @var $response Zend_Rest_Client_Result */
-        $response = $this->twitter->status->friendsTimeline( array('id' => 'sidhighwind', 'since' => '-2 days') );
+        $response = $this->twitter->status->friendsTimeline( array('id' => 'zftestuser1', 'since' => '-2 days') );
         $this->assertTrue($response instanceof Zend_Rest_Client_Result);
         $httpClient    = Phly_Twitter::getHttpClient();
         $httpRequest   = $httpClient->getLastRequest();
         $httpResponse  = $httpClient->getLastResponse();
-        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . "\n" . $httpResponse->getHeadersAsString());
+        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
         $this->assertTrue(isset($response->status));
     }
 
@@ -317,28 +317,43 @@ class Phly_TwitterTest extends PHPUnit_Framework_TestCase
     public function testFriendsTimelineWithPageReturnsResults()
     {
         /* @var $response Zend_Rest_Client_Result */
-        $response = $this->twitter->status->friendsTimeline( array('id' => 'sidhighwind', 'page' => '2') );
+        $response = $this->twitter->status->friendsTimeline( array('id' => 'zftestuser1', 'page' => '2') );
         $this->assertTrue($response instanceof Zend_Rest_Client_Result);
         $httpClient    = Phly_Twitter::getHttpClient();
         $httpRequest   = $httpClient->getLastRequest();
         $httpResponse  = $httpClient->getLastResponse();
-        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . "\n" . $httpResponse->getHeadersAsString());
+        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
         $this->assertTrue(isset($response->status));
     }
 
     /**
      * @return void
      */
-    public function testUserTimelineStatusReturnsResults()
+    public function testUserTimelineStatusWithPageAndTwoTweetsReturnsResults()
     {
         /* @var $response Zend_Rest_Client_Result */
-        $response = $this->twitter->status->userTimeline( array('id' => 'sidhighwind') );
+        $response = $this->twitter->status->userTimeline( array('id' => 'zftestuser1', 'count' => 2) );
         $this->assertTrue($response instanceof Zend_Rest_Client_Result);
         $httpClient    = Phly_Twitter::getHttpClient();
         $httpRequest   = $httpClient->getLastRequest();
         $httpResponse  = $httpClient->getLastResponse();
-        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . "\n" . $httpResponse->getHeadersAsString());
+        $raw_response = $httpResponse->getHeadersAsString() . $httpResponse->getBody();
+        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
+        $this->assertTrue(isset($response->status), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
+        $this->assertEquals(2, count($response->status), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
+    }
+
+    public function testUserTimelineStatusShouldReturnTwentyResults()
+    {
+        /* @var $response Zend_Rest_Client_Result */
+        $response = $this->twitter->status->userTimeline( array('id' => 'sidhighwind', 'count' => 40) );
+        $this->assertTrue($response instanceof Zend_Rest_Client_Result);
+        $httpClient    = Phly_Twitter::getHttpClient();
+        $httpRequest   = $httpClient->getLastRequest();
+        $httpResponse  = $httpClient->getLastResponse();
+        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
         $this->assertTrue(isset($response->status));
+        $this->assertEquals(20, count($response->status));
     }
 
     /**
@@ -346,12 +361,12 @@ class Phly_TwitterTest extends PHPUnit_Framework_TestCase
      */
     public function testUserTimelineStatusSinceTwoDaysAgoDateAsStringReturnsResults()
     {
-        $response = $this->twitter->status->userTimeline( array('id' => 'sidhighwind', 'since' => '-2 days') );
+        $response = $this->twitter->status->userTimeline( array('id' => 'zftestuser1', 'since' => '-2 days') );
         $this->assertTrue($response instanceof Zend_Rest_Client_Result);
         $httpClient    = Phly_Twitter::getHttpClient();
         $httpRequest   = $httpClient->getLastRequest();
         $httpResponse  = $httpClient->getLastResponse();
-        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . "\n" . $httpResponse->getHeadersAsString());
+        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
         $this->assertTrue(isset($response->status));
     }
 
@@ -360,12 +375,12 @@ class Phly_TwitterTest extends PHPUnit_Framework_TestCase
      */
     public function testUserTimelineStatusSinceTwoDaysAgoDateAsIntegerReturnsResults()
     {
-        $response = $this->twitter->status->userTimeline( array('id' => 'sidhighwind', 'since' => strtotime('-2 days')) );
+        $response = $this->twitter->status->userTimeline( array('id' => 'zftestuser1', 'since' => strtotime('-2 days')) );
         $this->assertTrue($response instanceof Zend_Rest_Client_Result);
         $httpClient    = Phly_Twitter::getHttpClient();
         $httpRequest   = $httpClient->getLastRequest();
         $httpResponse  = $httpClient->getLastResponse();
-        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . "\n" . $httpResponse->getHeadersAsString());
+        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
         $this->assertTrue(isset($response->status));
     }
 
@@ -381,7 +396,7 @@ class Phly_TwitterTest extends PHPUnit_Framework_TestCase
         $httpClient    = Phly_Twitter::getHttpClient();
         $httpRequest   = $httpClient->getLastRequest();
         $httpResponse  = $httpClient->getLastResponse();
-        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . "\n" . $httpResponse->getHeadersAsString());
+        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
         $this->assertTrue(isset($response->status));
     }
 
@@ -391,7 +406,7 @@ class Phly_TwitterTest extends PHPUnit_Framework_TestCase
     public function testPostStatusUpdateToLongShouldThrowException()
     {
         try {
-            $response = $this->twitter->status->update( 'Test Message - ' . str_repeat(" Hello ", 140) );
+            $response = $this->twitter->status->update( 'Test Message - ' . str_repeat(' Hello ', 140) );
             $this->fail('Trying to post a status with > 140 character should throw exception');
         } catch (Exception $e) {
         }
@@ -426,7 +441,7 @@ class Phly_TwitterTest extends PHPUnit_Framework_TestCase
         $httpClient    = Phly_Twitter::getHttpClient();
         $httpRequest   = $httpClient->getLastRequest();
         $httpResponse  = $httpClient->getLastResponse();
-        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . "\n" . $httpResponse->getHeadersAsString());
+        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
         $this->assertTrue(isset($response->status));
 
     }
@@ -449,7 +464,7 @@ class Phly_TwitterTest extends PHPUnit_Framework_TestCase
         $httpClient    = Phly_Twitter::getHttpClient();
         $httpRequest   = $httpClient->getLastRequest();
         $httpResponse  = $httpClient->getLastResponse();
-        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . "\n" . $httpResponse->getHeadersAsString());
+        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
         $this->assertTrue(isset($response->status));
 
     }
@@ -465,7 +480,7 @@ class Phly_TwitterTest extends PHPUnit_Framework_TestCase
         $httpClient    = Phly_Twitter::getHttpClient();
         $httpRequest   = $httpClient->getLastRequest();
         $httpResponse  = $httpClient->getLastResponse();
-        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . "\n" . $httpResponse->getHeadersAsString());
+        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
         $this->assertTrue(isset($response->status));
     }
 
@@ -483,7 +498,7 @@ class Phly_TwitterTest extends PHPUnit_Framework_TestCase
         $httpClient    = Phly_Twitter::getHttpClient();
         $httpRequest   = $httpClient->getLastRequest();
         $httpResponse  = $httpClient->getLastResponse();
-        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . "\n" . $httpResponse->getHeadersAsString());
+        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
         $this->assertTrue(isset($response->status));
     }
 
@@ -502,8 +517,65 @@ class Phly_TwitterTest extends PHPUnit_Framework_TestCase
         $httpClient    = Phly_Twitter::getHttpClient();
         $httpRequest   = $httpClient->getLastRequest();
         $httpResponse  = $httpClient->getLastResponse();
-        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . "\n" . $httpResponse->getHeadersAsString());
+        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
         $this->assertTrue(isset($response->status));
+    }
+
+    public function testUserFriendsReturnsResults()
+    {
+        $response = $this->twitter->user->friends();
+        $this->assertTrue($response instanceof Zend_Rest_Client_Result);
+        $httpClient    = Phly_Twitter::getHttpClient();
+        $httpRequest   = $httpClient->getLastRequest();
+        $httpResponse  = $httpClient->getLastResponse();
+        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
+        $this->assertTrue(isset($response->status));
+    }
+
+    public function testUserFolloersReturnsResults()
+    {
+        $response = $this->twitter->user->followers('zftestuser1');
+        $this->assertTrue($response instanceof Zend_Rest_Client_Result);
+        $httpClient    = Phly_Twitter::getHttpClient();
+        $httpRequest   = $httpClient->getLastRequest();
+        $httpResponse  = $httpClient->getLastResponse();
+        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
+        $this->assertTrue(isset($response->status));
+    }
+
+    public function testUserFriendsSpecificUserReturnsResults()
+    {
+        $response = $this->twitter->user->friends('zftestuser1');
+        $this->assertTrue($response instanceof Zend_Rest_Client_Result);
+        $httpClient    = Phly_Twitter::getHttpClient();
+        $httpRequest   = $httpClient->getLastRequest();
+        $httpResponse  = $httpClient->getLastResponse();
+        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
+        $this->assertTrue(isset($response->status), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
+
+        return $response;
+    }
+
+    public function testUserShowReturnsResults()
+    {
+        $userInfo = $this->testUserFriendsSpecificUserReturnsResults();
+        $userId = $userInfo->toValue($userInfo->user->id);
+
+        $response = $this->twitter->user->show($userId);
+        $this->assertTrue($response instanceof Zend_Rest_Client_Result);
+
+        $this->assertEquals($userInfo->toValue($userInfo->user->name), $response->toValue($response->name));
+        $this->assertEquals($userId, $response->toValue($response->id));
+    }
+
+    public function testStatusRepliesReturnsResults()
+    {
+        $response = $this->twitter->status->replies(array('since' => '-800 days', 'page' => 1, 'since_id' => 10000, 'invalid_option' => 'doh'));
+        $this->assertTrue($response instanceof Zend_Rest_Client_Result);
+        $httpClient    = Phly_Twitter::getHttpClient();
+        $httpRequest   = $httpClient->getLastRequest();
+        $httpResponse  = $httpClient->getLastResponse();
+        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
     }
 
     /**
@@ -511,17 +583,17 @@ class Phly_TwitterTest extends PHPUnit_Framework_TestCase
      */
     public function testFriendshipDestory()
     {
-        $response = $this->twitter->friendship->destroy("sidhighwind");
+        $response = $this->twitter->friendship->destroy('zftestuser1');
         $this->assertTrue($response instanceof Zend_Rest_Client_Result);
 
         $httpClient     = Phly_Twitter::getHttpClient();
         $httpRequest    = $httpClient->getLastRequest();
         $httpResponse   = $httpClient->getLastResponse();
-        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . "\n" . $httpResponse->getHeadersAsString());
+        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
     }
 }
 
 // Call Phly_TwitterTest::main() if this source file is executed directly.
-if (PHPUnit_MAIN_METHOD == "Phly_TwitterTest::main") {
+if (PHPUnit_MAIN_METHOD == 'Phly_TwitterTest::main') {
     Phly_TwitterTest::main();
 }

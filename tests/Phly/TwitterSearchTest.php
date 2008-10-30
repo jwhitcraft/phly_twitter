@@ -154,6 +154,16 @@ class Phly_TwitterSearchTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(($response->count() == 30));
 
     }
+
+    public function testAtomSearchShowUserReturnsObject()
+    {
+        $this->twitter->setResponseType('atom');
+        /* @var $response Zend_Feed_Atom */
+        $response = $this->twitter->search('zend', array('show_user' => 'true'));
+
+        $this->assertTrue($response instanceof Zend_Feed_Atom);
+
+    }
 }
 
 ?>

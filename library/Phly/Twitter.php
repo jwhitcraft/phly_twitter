@@ -214,16 +214,12 @@ class Phly_Twitter extends Zend_Rest_Client
     /**
      * Public Timeline status
      *
-     * @param  int $sinceId If set, returns only those since the ID provided
      * @return Zend_Rest_Client_Result
      */
-    public function statusPublicTimeline($sinceId = null)
+    public function statusPublicTimeline()
     {
         $this->_init();
         $path = '/statuses/public_timeline.xml';
-        if (null !== $sinceId) {
-            $this->since_id = (int) $sinceId;
-        }
         $response = $this->restGet($path);
         return new Zend_Rest_Client_Result($response->getBody());
     }
@@ -278,6 +274,7 @@ class Phly_Twitter extends Zend_Rest_Client
     {
         $this->_init();
         $path = '/statuses/user_timeline';
+        $_params = array();
         foreach ($params as $key => $value) {
             switch (strtolower($key)) {
                 case 'id':
@@ -287,7 +284,7 @@ class Phly_Twitter extends Zend_Rest_Client
                     $this->_setDate($value);
                     break;
                 case 'page':
-                    $this->page = (int) $value;
+                    $_params['page'] = (int) $value;
                     break;
                 case 'count':
                     $count = (int) $value;
@@ -296,14 +293,14 @@ class Phly_Twitter extends Zend_Rest_Client
                     } elseif (20 < $count) {
                         $count = 20;
                     }
-                    $this->count = $count;
+                    $_params['count'] = $count;
                     break;
                 default:
                     break;
             }
         }
         $path    .= '.xml';
-        $response = $this->restGet($path);
+        $response = $this->restGet($path, $_params);
         return new Zend_Rest_Client_Result($response->getBody());
     }
 
@@ -361,17 +358,29 @@ class Phly_Twitter extends Zend_Rest_Client
      * @param  int $page Which page of replies to retrieve
      * @return Zend_Rest_Client_Result
      */
-    public function statusReplies($page = 1)
+    public function statusReplies(array $params = array())
     {
         $this->_init();
         $path = '/statuses/replies.xml';
 
-        $page = (int) $page;
-        if ($page > 1) {
-            $this->page = $page;
+        $_params = array();
+        foreach ($params as $key => $value) {
+            switch (strtolower($key)) {
+                case 'since':
+                    $this->_setDate($value);
+                    break;
+                case 'since_id':
+                    $_params['since_id'] = (int) $value;
+                    break;
+                case 'page':
+                    $_params['page'] = (int) $value;
+                    break;
+                default:
+                    break;
+            }
         }
 
-        $response = $this->restGet($path);
+        $response = $this->restGet($path, $_params);
         return new Zend_Rest_Client_Result($response->getBody());
     }
 
@@ -547,8 +556,8 @@ class Phly_Twitter extends Zend_Rest_Client
         }
 
         $data = array(
-        	'user'	=> $user,
-        	'text'	=> $text,
+            'user'	=> $user,
+            'text'	=> $text,
         );
 
         $response = $this->restPost($path, $data);
